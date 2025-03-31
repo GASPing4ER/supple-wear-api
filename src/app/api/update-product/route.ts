@@ -39,6 +39,7 @@ async function updateProductInEracuni(productTitle: string, variant: any) {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
+    console.log("Body:", body);
 
     // Ensure that variant_gids exist and variants are available in the payload
     if (body?.variant_gids && body?.variants) {
