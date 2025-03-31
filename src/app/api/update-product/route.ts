@@ -45,6 +45,8 @@ export async function POST(req: NextRequest) {
     if (body?.variant_gids && body?.variants) {
       console.log("Variants updated:", body.variant_gids);
 
+      const oneMinuteAgo = new Date(Date.now() - 120 * 1000); // Current time - 2 minute
+
       // Loop through each updated variant
       for (const updatedVariant of body.variant_gids) {
         const variantId = updatedVariant.admin_graphql_api_id.split("/").pop(); // Extract ID
@@ -55,9 +57,20 @@ export async function POST(req: NextRequest) {
         );
 
         if (variant) {
-          console.log(`Updating variant: ${variant.title} (${variant.id})`);
-          await updateProductInEracuni(body.title, variant);
-          await delay(2000); // Add a small delay between API calls to prevent rate limits
+          const variantUpdatedAt = new Date(variant.updated_at);
+
+          // Check if the variant was updated in the last minute
+          if (variantUpdatedAt > oneMinuteAgo) {
+            console.log(
+              `Updating variant: ${variant.title} (${variant.id}) - Last updated: ${variant.updated_at}`
+            );
+            await updateProductInEracuni(body.title, variant);
+            await delay(2000); // Add a small delay between API calls to prevent rate limits
+          } else {
+            console.log(
+              `Skipping variant: ${variant.title} (${variant.id}) - Not updated recently`
+            );
+          }
         } else {
           console.warn(`Variant ID ${variantId} not found in product variants`);
         }
