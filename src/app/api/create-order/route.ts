@@ -17,11 +17,7 @@ async function createInvoiceInEracuni(order: any) {
       parameters: {
         SalesInvoice: {
           buyerName: `${order.customer.first_name} ${order.customer.last_name}`,
-          buyerStreet: order.customer.default_address.address1,
-          buyerPostalCode: order.customer.default_address.zip,
-          buyerCity: order.customer.default_address.city, // ✅ Added buyerCity
           buyerEmail: order.customer.email,
-          buyerPhone: order.customer.phone,
           Items: order.line_items.map((item: any) => ({
             productCode: item.sku,
             quantity: item.quantity,
