@@ -16,22 +16,16 @@ async function createInvoiceInEracuni(order: any) {
       method: "SalesInvoiceCreate",
       parameters: {
         SalesInvoice: {
-          customer: order.customer,
-          buyerFirstName: order.customer.first_name,
-          buyerLastName: order.customer.last_name,
+          buyerName: `${order.customer.first_name} ${order.customer.last_name}`,
           buyerStreet: order.customer.default_address.address1,
-          buyerCity: order.customer.default_address.city, // ✅ Added buyerCity
           buyerPostalCode: order.customer.default_address.zip,
-          cashRegisterCode: "001", // ✅ Added cashRegisterCode (modify as needed)
-          items: order.line_items.map((item: any) => ({
-            sku: item.sku,
+          buyerCity: order.customer.default_address.city, // ✅ Added buyerCity
+          buyerEmail: order.customer.email,
+          buyerPhone: order.customer.phone,
+          Items: order.line_items.map((item: any) => ({
+            productCode: item.sku,
             quantity: item.quantity,
-            price: item.price,
           })),
-          total: order.total_price,
-          currency: order.currency,
-          order_id: order.id,
-          methodOfPayment: order.payment_gateway_names[0], // ✅ Fixed methodOfPayment
         },
       },
     }),
