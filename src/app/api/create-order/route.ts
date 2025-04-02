@@ -21,8 +21,6 @@ async function createInvoiceInEracuni(order: any) {
           Items: order.line_items.map((item: any) => ({
             productCode: item.sku,
             quantity: item.quantity,
-            netPrice: parseFloat(item.price),
-            description: item.description || "",
           })),
         },
       },
@@ -103,7 +101,7 @@ export async function POST(req: Request) {
     console.log(`🔄 Updating Shopify order ${order.id} with invoice URL...`);
 
     const response = await fetch(
-      `https://supple-wear.myshopify.com/admin/api/2025-04/orders/${order.id}.json`,
+      `https://supple-wear.myshopify.com/admin/api/2025-04/orders/6580842824018.json`,
       {
         method: "PUT",
         headers: {
