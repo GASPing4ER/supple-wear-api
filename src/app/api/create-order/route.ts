@@ -85,7 +85,7 @@ export async function POST(req: Request) {
 
     // Create invoice
     const invoiceData = await createInvoiceInEracuni(order);
-    const documentID = invoiceData.documentID;
+    const documentID = invoiceData.result.documentID;
     console.log("🆔 Extracted documentID:", documentID);
 
     if (!documentID) {
