@@ -21,6 +21,8 @@ async function createInvoiceInEracuni(order: any) {
           Items: order.line_items.map((item: any) => ({
             productCode: item.sku,
             quantity: item.quantity,
+            netPrice: parseFloat(item.price),
+            description: item.description || "",
           })),
         },
       },
