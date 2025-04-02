@@ -17,6 +17,12 @@ async function createInvoiceInEracuni(order: any) {
       parameters: {
         SalesInvoice: {
           customer: order.customer,
+          buyer: {
+            name: order.customer.name,
+            address: order.customer.address,
+            email: order.customer.email,
+            phone: order.customer.phone,
+          },
           items: order.line_items,
           total: order.total_price,
           currency: order.currency,
