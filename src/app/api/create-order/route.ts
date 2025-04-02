@@ -94,7 +94,7 @@ export async function POST(req: Request) {
 
     // Get public invoice URL
     const publicURLData = await getInvoicePublicURL(documentID);
-    const invoiceURL = publicURLData.publicURL;
+    const invoiceURL = publicURLData.response.result.publicURL;
     console.log("🌍 Invoice Public URL:", invoiceURL);
 
     if (!invoiceURL) {
