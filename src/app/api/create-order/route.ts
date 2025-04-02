@@ -113,8 +113,10 @@ export async function POST(req: Request) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          id: order.id,
-          note: `Invoice generated: ${invoiceURL}`,
+          order: {
+            id: order.id,
+            note: `Invoice generated: ${invoiceURL}`,
+          },
         }),
       }
     );
