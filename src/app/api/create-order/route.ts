@@ -30,7 +30,7 @@ async function createInvoiceInEracuni(order: any) {
           total: order.total_price,
           currency: order.currency,
           order_id: order.id,
-          methodOfPayment: "Visa",
+          methodOfPayment: "Cash",
         },
       },
     }),
