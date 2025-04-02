@@ -17,16 +17,20 @@ async function createInvoiceInEracuni(order: any) {
       parameters: {
         SalesInvoice: {
           customer: order.customer,
-          buyer: {
-            name: order.customer.name,
-            address: order.customer.address,
-            email: order.customer.email,
-            phone: order.customer.phone,
-          },
-          items: order.line_items,
+          buyerFirstName: order.customer.first_name,
+          buyerLastName: order.customer.last_name,
+          buyerStreet: order.customer.default_address.address1,
+          buyerPostalCode: order.customer.default_address,
+          items: order.line_items.map((item: any) => ({
+            sku: item.sku,
+            name: item.title,
+            quantity: item.quantity,
+            price: parseFloat(item.price),
+          })),
           total: order.total_price,
           currency: order.currency,
           order_id: order.id,
+          methodOfPayment: "Visa",
         },
       },
     }),
