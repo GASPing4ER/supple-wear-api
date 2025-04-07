@@ -34,7 +34,6 @@ async function createInvoiceInEracuni(order: any) {
   }
 
   const responseData = await response.json();
-  console.log("✅ Invoice creation response:", responseData);
   return responseData;
 }
 
@@ -65,19 +64,14 @@ async function getInvoicePublicURL(documentID: string) {
   }
 
   const responseData = await response.json();
-  console.log("✅ Public URL response:", responseData);
   return responseData;
 }
 
 export async function POST(req: Request) {
   try {
-    console.log("📩 Received new webhook request");
-
     const rawBody = await req.text();
-    console.log("📜 Raw request body:", rawBody);
 
     const order = JSON.parse(rawBody);
-    console.log("🛍️ Processed order:", order.id);
 
     // Create invoice
     const invoiceData = await createInvoiceInEracuni(order);
@@ -101,7 +95,7 @@ export async function POST(req: Request) {
     console.log(`🔄 Updating Shopify order ${order.id} with invoice URL...`);
 
     const response = await fetch(
-      `https://supple-wear.myshopify.com/admin/api/2025-04/orders/6580842824018.json`,
+      `https://supple-wear.myshopify.com/admin/api/2025-04/orders/${order.id}.json`,
       {
         method: "PUT",
         headers: {
